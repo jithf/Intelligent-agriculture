@@ -1,0 +1,1 @@
+bin\openssl.exe pkcs8 -inform PEM -outform PEM -in rsa_private_key_pkcs8.pem -out rsa_p.pem -nocrypt
