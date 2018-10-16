@@ -1,0 +1,175 @@
+<!DOCTYPE html >
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+
+<!--xmlns:th="http://www.thymeleaf.org"-->
+<!--xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">-->
+
+<html>
+
+<head>
+</head>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<body>
+<!-- Page Content -->
+
+
+    <div class="row">
+
+        <!-- 左侧栏目 -->
+        <div class="col-md-4 col-xl-3">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <span>
+                    <a class="blog-edit-avatar" data-toggle="modal"
+                       data-target="#flipFlop" role="button">
+
+							</a>
+                        </a>
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 右侧栏目 -->
+
+
+        <div class="col-md-8 col-xl-9">
+
+
+            <!-- 个人设置 -->
+
+            <!--<form th:action="@{/center/personalcenter}" method="get">-->
+            <div class="card ">
+                <h5 class="card-header"><i class="fa fa-cog" aria-hidden="true"></i> 个人设置</h5>
+                <div class="card-block">
+                    <!--<input type="hidden" name="id" id="userId" >-->
+
+                    <div class="form-group ">
+                        <label for="username" class="col-form-label">账号</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="search" onclick="personalaction()">
+                            查找
+                        </button>
+                    </div>
+                    <br>
+                    <br>
+                        <div>
+                            <label for="nickname" >昵称</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname">
+                        </div>
+                    <br>
+                    <br>
+                    <div>
+                        <button type="submit" class="btn btn-primary" id="change" onclick="personchange()">
+                            修改
+                        </button>
+                </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                     <!--上传图片html基本格式-->
+                    <form id="uploadForm" enctype="multipart/form-data">
+                    <label>上传图片</label>
+                    <input type="file" name="file" id="file"/>
+                    <input type="button" value="上传" onclick="upanddownpicture()"/>
+
+                    </form>
+
+                    <!--<form  th:action="@{/touxiang}" method="post" enctype="multipart/form-data" >-->
+                        <!--<label>上传图片</label>-->
+                        <!--<input type="file" name="file"/>-->
+                        <!--<input type="submit" value="上传"/>-->
+                    <!--</form>-->
+            </div>
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+<h2></h2>
+<p>
+<div id="success"></div>
+</p>
+<p></p>
+<p></p>
+<!-- ajax-->
+<script>
+
+    function personalaction() {
+        $.ajax({
+            type: "GET",
+            url: "/person",
+            dataType: "json",
+            data: {
+                username: $("#username").val(),
+            },
+            success: function (data) {
+                //alert(data.id);
+                console.log(data);
+                //alert(msg);                var result = $(data).find("username").text();
+                console.log(data);
+            },
+            error: function (msg) {
+                //console.error(info);
+                alert(msg);
+            }
+        });
+    }
+
+    function personchange() {
+        $.ajax({
+            type: "POST",
+            url:"/personchange",
+            dataType:"json",
+            data: {
+                nickname: $("#nickname").val(),
+                username: $("#username").val(),
+            },
+            success: function(data) {
+                console.log(data.nickname);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+
+        });
+
+    }
+
+    function upanddownpicture() {
+        var formdata = new FormData(uploadForm);
+        formdata.append("username",$("#username").val());
+        $.ajax({
+            type: "POST",
+            url:"/touxiang",
+            dataType:"json",
+            data: formdata,
+
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data.avater);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    }
+
+</script>
+
+
+</body>
+</html>

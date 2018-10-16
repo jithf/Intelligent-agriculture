@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>登录表单</title>
+    <!--
+        作者：1076008735@qq.com
+        时间：2018-03-23
+        描述：登录
+    -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="/css/login.css"/>
+</head>
+
+<body>
+<h1>智 慧 农 业 教 育 登 录 平 台</h1>
+<div class="container">
+    <div class="login">
+        <h2>登 录</h2>
+        <form th:action="@{/login}" method="post">
+            <input type="text" id="username" Name="username" placeholder="手机号码" required="">
+            <input type="password" id="password" Name="password" placeholder="密码" required="">
+            <ul class="tick">
+                <li>
+                    <input type="checkbox" id="brand1" value="">
+                    <label for="brand1"><span></span>记住我</label>
+                </li>
+            </ul>
+            <div class="send-button">
+                <input id="login" type="submit" value="登 录">
+            </div>
+
+            <!--&lt;!&ndash;/*@thymesVar id="loginError" type=""*/&ndash;&gt;-->
+            <!--<div class=" col-md-5" th:if="${loginError}">-->
+                <!--<p class="blog-label-error" th:text="${errorMsg}" style="color: #CCCCCC"></p>-->
+            <!--</div>-->
+        </form>
+        <div class="social-icons">
+            <p>- 其他方式登录 -</p>
+            <ul>
+                <li class="qq">
+                    <a href="#">
+                        <span class="icons"></span>
+                        <span class="text">QQ</span></a>
+                </li>
+                <li class="weixin">
+                    <a href="#">
+                        <span class="icons"></span>
+                        <span class="text">微信</span></a>
+                </li>
+                <li class="weibo">
+                    <a href="#">
+                        <span class="icons"></span>
+                        <span class="text">微博</span></a>
+                </li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+
+</html>

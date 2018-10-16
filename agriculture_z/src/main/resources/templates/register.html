@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>注册表单</title>
+    <!--
+作者：1076008735@qq.com
+时间：2018-03-23
+描述：注册
+-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="/css/register.css"/>
+</head>
+<!-- //Head -->
+
+<!-- Body -->
+
+<body>
+<h1>智 慧 农 业 教 育 注 册 平 台</h1>
+<div class="container">
+    <div class="register">
+        <h2>注 册</h2>
+        <form th:action="@{/register}" method="post">
+            <input type="text" id="username" Name="username" placeholder="手机号码" required=""/>
+            <input type="password" id="password" Name="password" maxlength="30" placeholder="密码" required=""/>
+            <input type="password" id="passwoerd1" Name="password1" placeholder="确认密码" required=""/>
+            <div class="verityCode">
+                <input type="text" Name="verityCode" placeholder="手机验证码"/>
+                <div class="send-button">
+                    <input calss="send-button" type="button" id="sendVerityCode" value="获取验证码">
+                </div>
+            </div>
+            <div class="send-button">
+                <input type="submit" id="register" value="免费注册" onclick="register()">
+            </div>
+            <div class=" col-md-5" th:if="${registerError}">
+                <p class="blog-label-error" th:text="${errorMsg}" style="color: #CCCCCC"></p>
+            </div>
+        </form>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/toastr.js"></script>
+<script>
+    $('#sendVerityCode').click(function () {
+        var tel = $("#username").val();
+        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+        if (!myreg.test(tel)) {
+            toastr.error('请输入手机号码！');
+            return false;
+        } else {
+            var btn = $('#sendVerityCode');
+            var count = 60;
+            var resend = setInterval(function () {
+                count--;
+                if (count > 0) {
+                    btn.val(count + "秒后重新获取");
+                    $.cookie("captcha", count, {path: '/', expires: (1 / 86400) * count});
+                } else {
+                    clearInterval(resend);
+                    btn.val("发送验证码").removeAttr('disabled style');
+                }
+            }, 1000);
+            btn.attr('disabled', true).css('cursor', 'not-allowed');
+        }
+        $.ajax({
+            type: "POST",
+            url: "/configure?username=" + $("#username").val(),
+            dataType: "json",
+            async: 'false',
+        });
+    });
+
+</script>
+</html>

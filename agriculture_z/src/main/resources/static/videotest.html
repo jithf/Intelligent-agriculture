@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
+</head>
+<body>
+<!--上传图片html基本格式-->
+<form id="uploadForm" enctype="multipart/form-data">
+    <label>上传视频</label>
+    <input type="file" name="file" id="file"/>
+    <p>标题</p>
+    <input type="text" name="title" id="title"/>
+    <p>作者</p>
+    <input type="text" name="author" id="author"/>
+    <p>简介</p>
+    <input type="text" name="description" id="description"/>
+
+    <input type="button" value="上传" onclick="videouploading()"/>
+
+</form>
+
+<script>
+    function videouploading() {
+        var formdata = new FormData(uploadForm);
+        //formdata.append("username",$("#username").val());
+        $.ajax({
+            type: "POST",
+            url:"/videoUpload",
+            dataType:"json",
+            data: formdata,
+
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data.avater);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
